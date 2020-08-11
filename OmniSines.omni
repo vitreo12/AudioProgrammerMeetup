@@ -1,0 +1,27 @@
+ins 2:
+    "num"  {1, 1, 100}
+    "freq" {440, 1, 20000}
+
+outs 1
+
+struct Phasor:
+    phase
+
+def initPhasors(num):
+    phasors = Data[Phasor](num)
+    for phasor in phasors:
+        phasor = Phasor()
+    return phasors
+
+init:
+    NUM = in1
+    AMP = 1 / NUM
+    phasors = initPhasors(NUM)
+
+sample:
+    freq_incr = in2 / samplerate
+    sample_out = 0.0
+    for index, phasor in phasors:
+        sample_out   += sin(phasor.phase * twopi) * AMP
+        phasor.phase = (phasor.phase + (freq_incr * (index + 1))) % 1
+    out1 = sample_out

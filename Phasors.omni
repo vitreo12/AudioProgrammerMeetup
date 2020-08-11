@@ -1,0 +1,14 @@
+struct Phasor:
+    phase
+
+struct Phasors:
+    NUM int
+    AMP float
+    phasors Data[Phasor]
+
+def initPhasors(num):
+    phasors_data = Data[Phasor](num)
+    for phasor in phasors_data:
+        phasor = Phasor()
+    phasors = Phasors(num, 1.0 / num, phasors_data)
+    return phasors

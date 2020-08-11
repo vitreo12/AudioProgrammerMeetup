@@ -1,0 +1,13 @@
+require "Sines.omni"
+
+ins 2:
+    "num"  {1, 1, 100}
+    "freq" {440, 1, 20000}
+
+outs 1
+
+init:
+    sines = initPhasors(in1)
+
+sample:
+    out1 = sines.process(in2)

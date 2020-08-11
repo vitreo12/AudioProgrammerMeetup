@@ -1,0 +1,9 @@
+require "Phasors.omni"
+
+def process(phasors, freq):
+    freq_incr = freq / samplerate
+    sample_out = 0.0
+    for index, phasor in phasors.phasors:
+        sample_out   += sin(phasor.phase * twopi) * phasors.AMP
+        phasor.phase = (phasor.phase + (freq_incr * (index + 1))) % 1
+    return sample_out

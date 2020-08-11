@@ -1,0 +1,18 @@
+require "Phasors.omni"
+
+ins 2:
+    "num"  {1, 1, 100}
+    "freq" {440, 1, 20000}
+
+outs 1
+
+init:
+    phasors = initPhasors(in1)
+
+sample:
+    freq_incr = in2 / samplerate
+    sample_out = 0.0
+    for index, phasor in phasors.phasors:
+        sample_out   += sin(phasor.phase * twopi) * phasors.AMP
+        phasor.phase = (phasor.phase + (freq_incr * (index + 1))) % 1
+    out1 = sample_out
